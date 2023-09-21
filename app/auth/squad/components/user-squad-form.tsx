@@ -7,24 +7,30 @@ import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { validate as uuidValidate, v4 as uuidv4, NIL as NIL_UUID } from "uuid";
 
 interface UserSquadFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserSquadForm({ className, ...props }: UserSquadFormProps) {
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
+	const [squadValue, setSquadValue] = React.useState<string>("");
+	const [isSquadValid, setIsSquadValid] = React.useState<boolean>(true);
 
-	async function onSubmit(event: React.SyntheticEvent) {
+	async function joinSquad(event: React.SyntheticEvent) {
 		event.preventDefault();
 		setIsLoading(true);
 
-		setTimeout(() => {
+		if (uuidValidate(squadValue)) {
+			setIsSquadValid(true);
+		} else {
 			setIsLoading(false);
-		}, 3000);
+			setIsSquadValid(false);
+		}
 	}
 
 	return (
 		<div className={cn("grid gap-6", className)} {...props}>
-			<form onSubmit={onSubmit}>
+			<form onSubmit={joinSquad}>
 				<div className='grid gap-2'>
 					<div className='grid gap-1'>
 						<Label className='sr-only' htmlFor='squad'>
@@ -32,13 +38,19 @@ export function UserSquadForm({ className, ...props }: UserSquadFormProps) {
 						</Label>
 						<Input
 							id='squad'
-							placeholder='xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'
-							type='squad'
+							placeholder={NIL_UUID}
+							type='text'
 							autoCapitalize='none'
 							autoComplete='squad'
 							autoCorrect='off'
 							disabled={isLoading}
+							onChange={(e) => setSquadValue(e.target.value)}
 						/>
+						{!isSquadValid && (
+							<div className='text-red-500 text-sm text-muted-foreground text-center'>
+								Please enter a valid squad code
+							</div>
+						)}
 					</div>
 					<Button disabled={isLoading}>
 						{isLoading && (
