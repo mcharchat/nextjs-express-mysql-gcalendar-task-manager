@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import { PocketKnife } from "lucide-react";
 
 export const metadata: Metadata = {
-	title: "Authentication",
-	description: "Authentication forms built using the components.",
+	title: "GTaskPro - Authentication",
+	description: "GTaskPro - Authentication",
 };
 
 export default function AuthenticationLayout({
