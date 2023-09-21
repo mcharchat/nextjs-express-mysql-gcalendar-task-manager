@@ -3,7 +3,7 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
-//import { Icons } from "@/components/ui/icons";
+import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
@@ -31,10 +31,16 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 					console.log("clicked");
 				}}
 			>
-				{isLoading
-					? "loading" //<Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
-					: "not loading" //<Icons.google className='mr-2 h-4 w-4' />
-				}{" "}
+				{isLoading ? (
+					<Icon
+						icon='prime:spinner'
+						width='48'
+						height='48'
+						className='mr-2 h-4 w-4 animate-spin'
+					/>
+				) : (
+					<Icon icon='flat-color-icons:google' className='mr-2 h-4 w-4' />
+				)}{" "}
 				Google
 			</Button>
 		</div>
