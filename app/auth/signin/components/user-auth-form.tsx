@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useSession, signIn } from "next-auth/react";
 
 import { cn } from "@/lib/utils";
 import { Icon } from "@iconify/react";
@@ -10,15 +11,13 @@ interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
+	const { data: session } = useSession();
 
-	async function onSubmit(event: React.SyntheticEvent) {
-		event.preventDefault();
-		setIsLoading(true);
-
-		setTimeout(() => {
+	React.useEffect(() => {
+		if (session) {
 			setIsLoading(false);
-		}, 3000);
-	}
+		}
+	}, [session]);
 
 	return (
 		<div className={cn("grid gap-6", className)} {...props}>
@@ -27,6 +26,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 				type='button'
 				disabled={isLoading}
 				onClick={() => {
+					signIn();
 					setIsLoading(true);
 					console.log("clicked");
 				}}
