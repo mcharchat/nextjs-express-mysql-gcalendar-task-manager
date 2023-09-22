@@ -9,6 +9,7 @@ const base64Sequence = randomSequence.toString("base64");
 
 const envLocalContent = `GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
+
 NEXTAUTH_SECRET=${base64Sequence}
 NEXTAUTH_URL=http://localhost:3000
 `;
