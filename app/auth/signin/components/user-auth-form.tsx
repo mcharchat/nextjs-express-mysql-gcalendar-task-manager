@@ -26,9 +26,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 				type='button'
 				disabled={isLoading}
 				onClick={() => {
-					signIn();
+					signIn('google');
 					setIsLoading(true);
-					console.log("clicked");
 				}}
 			>
 				{isLoading ? (
