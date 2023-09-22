@@ -10,9 +10,22 @@ export const authOptions: NextAuthOptions = {
 			authorization: {
 				params: {
 					scope:
-						"https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/gmail.insert https://www.googleapis.com/auth/gmail.send",
+						"openid email profile https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/gmail.insert https://www.googleapis.com/auth/gmail.send",
 				},
 			},
 		}),
 	],
+	callbacks: {
+		async jwt({ token, account }) {
+			if (account) {
+				token.accessToken = account.access_token;
+			}
+			return token;
+		},
+		async session({ session, token }) {
+			session.user = token;
+			//session.accessToken = token.accessToken;
+			return session;
+		},
+	},
 };
