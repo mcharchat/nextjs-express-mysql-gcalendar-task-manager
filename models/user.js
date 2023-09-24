@@ -1,6 +1,5 @@
 "use strict";
 const { Model } = require("sequelize");
-const { Squad, Task } = require("../models");
 module.exports = (sequelize, DataTypes) => {
 	class User extends Model {
 		/**
@@ -10,19 +9,19 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			// define association here
-			User.belongsTo(Squad, {
+			this.belongsTo(models.Squad, {
 				foreignKey: "squadCode",
 				targetKey: "code",
 				as: "squad",
 			});
 
-			User.hasMany(Task, {
+			this.hasMany(models.Task, {
 				foreignKey: "assignee",
 				sourceKey: "id",
 				as: "assignedTasks",
 			});
 
-			User.hasMany(Task, {
+			this.hasMany(models.Task, {
 				foreignKey: "creator",
 				sourceKey: "id",
 				as: "createdTasks",

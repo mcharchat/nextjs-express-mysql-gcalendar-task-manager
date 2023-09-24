@@ -1,6 +1,5 @@
 "use strict";
 const { Model } = require("sequelize");
-const { Squad } = require("../models");
 module.exports = (sequelize, DataTypes) => {
 	class Tag extends Model {
 		/**
@@ -10,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			// define association here
-			Tag.belongsTo(Squad, {
+			this.belongsTo(models.Squad, {
 				foreignKey: "squadCode",
 				targetKey: "code",
 				as: "squad",

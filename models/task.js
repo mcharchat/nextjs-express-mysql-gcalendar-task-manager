@@ -1,6 +1,5 @@
 "use strict";
 const { Model } = require("sequelize");
-const { Squad, User } = require("../models");
 module.exports = (sequelize, DataTypes) => {
 	class Task extends Model {
 		/**
@@ -10,22 +9,20 @@ module.exports = (sequelize, DataTypes) => {
 		 */
 		static associate(models) {
 			// define association here
-			Task.belongsTo(Squad, {
+			this.belongsTo(models.Squad, {
 				foreignKey: "squadCode",
 				targetKey: "code",
 				as: "squad",
 			});
 
-			Task.belongsTo(User, {
+			this.belongsTo(models.User, {
 				foreignKey: "assignee",
 				targetKey: "id",
-				as: "assignee",
 			});
 
-			Task.belongsTo(User, {
+			this.belongsTo(models.User, {
 				foreignKey: "creator",
 				targetKey: "id",
-				as: "creator",
 			});
 		}
 	}
@@ -41,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
 			status: DataTypes.ENUM("todo", "in-progress", "done"),
 			creator: DataTypes.INTEGER,
 			assignee: DataTypes.INTEGER,
-			atendees: DataTypes.JSON,
+			attendees: DataTypes.JSON,
 			GCalendarEventId: DataTypes.STRING,
 			tags: DataTypes.JSON,
 		},
