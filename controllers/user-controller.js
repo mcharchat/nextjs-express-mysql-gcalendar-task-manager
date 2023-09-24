@@ -2,8 +2,8 @@ const { getToken } = require("next-auth/jwt");
 const { User } = require("../models");
 
 const userController = {
-	// POST users/me
-	usersMe: async (req, res) => {
+	// GET users/me
+	getUsersMe: async (req, res) => {
 		//const secret = process.env.NEXTAUTH_SECRET;
 		const token = await getToken({ req });
 		//const accessToken = token['access-token'];
@@ -17,6 +17,9 @@ const userController = {
 		});
 
 		res.json(user);
+	},
+	// PUT users/me
+	putUsersMe: async (req, res) => {
 	},
 };
 

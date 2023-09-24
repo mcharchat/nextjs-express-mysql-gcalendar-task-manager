@@ -1,5 +1,5 @@
 var express = require("express");
-const { usersMe } = require("../controllers/user-controller");
+const { getUsersMe, putUsersMe } = require("../controllers/user-controller");
 var router = express.Router();
 
 // middleware that is specific to this router
@@ -11,7 +11,8 @@ router.get("/", function (req, res) {
 	res.json();
 });
 // route for users/me
-router.post("/users/me", usersMe);
+router.get("/users/me", getUsersMe);
+router.put("/users/me", putUsersMe);
 
 // define the route for 404 errors
 router.get("*", function (req, res) {
