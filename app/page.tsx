@@ -3,19 +3,21 @@
 import { useSession } from "next-auth/react";
 import React from "react";
 import { Icon } from "@iconify/react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
 	const { data: session, status } = useSession();
+	const { push } = useRouter();
 
 	React.useEffect(() => {
 		if (status === "authenticated") {
 			setTimeout(() => {
-				window.location.href = "/app/dashboard";
+				push("/app/dashboard");
 			}, 1000);
 		}
 		if (status === "unauthenticated") {
 			setTimeout(() => {
-				window.location.href = "/auth/signin";
+				push("/auth/signin");
 			}, 1000);
 		}
 	}, [status]);
