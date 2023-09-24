@@ -8,6 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { validate as uuidValidate, v4 as uuidv4, NIL as NIL_UUID } from "uuid";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 interface UserSquadFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -15,6 +18,8 @@ export function UserSquadForm({ className, ...props }: UserSquadFormProps) {
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
 	const [squadValue, setSquadValue] = React.useState<string>("");
 	const [isSquadValid, setIsSquadValid] = React.useState<boolean>(true);
+	const { push } = useRouter();
+	const { toast } = useToast();
 
 	async function joinSquad(event: React.SyntheticEvent) {
 		event.preventDefault();
@@ -22,12 +27,33 @@ export function UserSquadForm({ className, ...props }: UserSquadFormProps) {
 
 		if (uuidValidate(squadValue)) {
 			setIsSquadValid(true);
+			await putSquad(squadValue);
 		} else {
 			setIsLoading(false);
 			setIsSquadValid(false);
 		}
 	}
 
+	async function createSquad(event: React.SyntheticEvent) {
+		event.preventDefault();
+		setIsLoading(true);
+
+		const squadCode = uuidv4();
+		await putSquad(squadCode);
+	}
+
+	async function putSquad(squadCode: string) {
+		const response = await axios.put("/api/users/me", { squadCode });
+		const { data } = response;
+
+		if (data) {
+			toast({
+				title: "You're all set!",
+				description: "Let's take you to our dashboard",
+			});
+			push("/app/dashboard");
+		}
+	}
 	return (
 		<div className={cn("grid gap-6", className)} {...props}>
 			<form onSubmit={joinSquad}>
@@ -52,7 +78,7 @@ export function UserSquadForm({ className, ...props }: UserSquadFormProps) {
 							</div>
 						)}
 					</div>
-					<Button disabled={isLoading}>
+					<Button disabled={isLoading} type='submit'>
 						{isLoading && (
 							<Icon
 								icon='prime:spinner'
@@ -75,25 +101,21 @@ export function UserSquadForm({ className, ...props }: UserSquadFormProps) {
 					</span>
 				</div>
 			</div>
-			<Button
-				variant='outline'
-				type='button'
-				disabled={isLoading}
-				onClick={() => {
-					setIsLoading(true);
-					console.log("clicked");
-				}}
-			>
-				{isLoading && (
-					<Icon
-						icon='prime:spinner'
-						width='48'
-						height='48'
-						className='mr-2 h-4 w-4 animate-spin'
-					/>
-				)}
-				Create Squad
-			</Button>
+			<form onSubmit={createSquad}>
+				<div className='grid gap-2'>
+					<Button variant='outline' type='submit' disabled={isLoading}>
+						{isLoading && (
+							<Icon
+								icon='prime:spinner'
+								width='48'
+								height='48'
+								className='mr-2 h-4 w-4 animate-spin'
+							/>
+						)}
+						Create Squad
+					</Button>
+				</div>
+			</form>
 		</div>
 	);
 }
