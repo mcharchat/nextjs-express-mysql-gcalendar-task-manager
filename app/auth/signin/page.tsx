@@ -1,7 +1,39 @@
-
+"use client";
 import { UserAuthForm } from "@/app/auth/signin/components/user-auth-form";
+import axios from "axios";
+import { useSession } from "next-auth/react";
+import React from "react";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function AuthenticationPage() {
+	const { data: session, status } = useSession();
+	const { push } = useRouter();
+	const { toast } = useToast();
+
+	const checkMe = async () => {
+		const response = await axios.post("/api/users/me");
+		const { data } = response;
+		if (data) {
+			toast({
+				title: "Welcome back!",
+				description: "You have successfully logged in",
+			});
+			push("/app/dashboard");
+		} else {
+			toast({
+				title: "Welcome aboard!",
+				description: "Now, let's get you started with your squad",
+			});
+			push("/auth/squad");
+		}
+	};
+
+	React.useEffect(() => {
+		if (status === "authenticated") {
+			checkMe();
+		}
+	}, [status]);
 	return (
 		<>
 			<div className='lg:p-8 col-span-2'>
