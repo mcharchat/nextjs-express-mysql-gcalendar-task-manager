@@ -1,4 +1,5 @@
 
+"use client"
 import { UserSquadForm } from "@/app/auth/squad/components/user-squad-form";
 
 export default function AuthenticationPage() {
