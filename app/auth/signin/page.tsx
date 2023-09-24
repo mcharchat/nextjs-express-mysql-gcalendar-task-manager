@@ -12,7 +12,7 @@ export default function AuthenticationPage() {
 	const { toast } = useToast();
 
 	const checkMe = async () => {
-		const response = await axios.post("/api/users/me");
+		const response = await axios.get("/api/users/me");
 		const { data } = response;
 		if (data) {
 			toast({
