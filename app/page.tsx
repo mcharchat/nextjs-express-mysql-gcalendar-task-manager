@@ -10,16 +10,9 @@ export default function Home() {
 	const { push } = useRouter();
 
 	React.useEffect(() => {
-		if (status === "authenticated") {
-			setTimeout(() => {
-				push("/app/dashboard");
-			}, 1000);
-		}
-		if (status === "unauthenticated") {
-			setTimeout(() => {
-				push("/auth/signin");
-			}, 1000);
-		}
+		setTimeout(() => {
+			push("/auth/signin");
+		}, 1000);
 	}, [status]);
 	return (
 		<div>
