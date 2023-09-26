@@ -51,7 +51,7 @@ function UserMenu() {
 			<DropdownMenuContent className='w-56'>
 				<DropdownMenuGroup>
 					<DropdownMenuSub>
-						<DropdownMenuSubTrigger>
+						<DropdownMenuSubTrigger side="left">
 							<SunMoon className='mr-2 h-4 w-4' />
 							<span>Theme</span>
 						</DropdownMenuSubTrigger>
