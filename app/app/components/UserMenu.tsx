@@ -8,6 +8,7 @@ import {
 	DropdownMenuContent,
 	DropdownMenuGroup,
 	DropdownMenuItem,
+	DropdownMenuLabel,
 	DropdownMenuPortal,
 	DropdownMenuSeparator,
 	DropdownMenuSub,
@@ -19,23 +20,14 @@ import { LogOut, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
+import { Button } from "@/components/ui/button";
 
 function UserMenu() {
 	const { data: session, status } = useSession();
-	const [picture, setPicture] = React.useState<string | undefined>(
-		defaultAvatar.src
-	);
-	const [alt, setAlt] = React.useState<string | undefined | null>("alt");
+	
 	const { setTheme } = useTheme();
 	const { push } = useRouter();
 	const { toast } = useToast();
-
-	React.useEffect(() => {
-		if (session?.user?.picture) {
-			setPicture(session?.user?.picture);
-			setAlt(session?.user?.name);
-		}
-	}, [session]);
 
 	React.useEffect(() => {
 		if (status === "unauthenticated") {
@@ -49,12 +41,28 @@ function UserMenu() {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
-				<Avatar className='cursor-pointer'>
-					<AvatarImage src={picture as string} alt={alt as string} />
-					<AvatarFallback></AvatarFallback>
-				</Avatar>
+				<Button variant='ghost' className='relative h-8 w-8 rounded-full'>
+					<Avatar className='h-8 w-8'>
+						<AvatarImage
+							src={session?.user?.picture ?? defaultAvatar.src}
+							alt={session?.user?.name ?? "alt"}
+						/>
+						<AvatarFallback></AvatarFallback>
+					</Avatar>
+				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className='w-56'>
+				<DropdownMenuLabel className='font-normal'>
+					<div className='flex flex-col space-y-1'>
+						<p className='text-sm font-medium leading-none'>
+							{session?.user?.name}
+						</p>
+						<p className='text-xs leading-none text-muted-foreground'>
+							{session?.user?.email}
+						</p>
+					</div>
+				</DropdownMenuLabel>
+				<DropdownMenuSeparator />
 				<DropdownMenuGroup>
 					<DropdownMenuSub>
 						<DropdownMenuSubTrigger side='left'>
