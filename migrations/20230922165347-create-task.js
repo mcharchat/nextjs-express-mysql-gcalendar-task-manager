@@ -89,12 +89,18 @@ module.exports = {
 				},
 			},
 			status: {
-				type: Sequelize.ENUM("todo", "in-progress", "done"),
+				type: Sequelize.ENUM(
+					"backlog",
+					"todo",
+					"in progress",
+					"done",
+					"cancelled"
+				),
 				allowNull: false,
 				defaultValue: "todo",
 				validator: {
 					isNull: false,
-					isIn: [["todo", "in-progress", "done"]],
+					isIn: [["backlog", "todo", "in progress", "done", "cancelled"]],
 				},
 			},
 			creator: {
@@ -113,7 +119,7 @@ module.exports = {
 					isNull: false,
 				},
 			},
-			tags: {
+			labels: {
 				type: Sequelize.JSON,
 				allowNull: true,
 			},

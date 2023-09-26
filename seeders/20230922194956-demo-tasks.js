@@ -16,12 +16,12 @@ module.exports = {
 		const squads = await queryInterface.select(null, "Squads", {});
 		const firstSquadCode = squads[0].code || null;
 		const users = await queryInterface.select(null, "Users", {});
-		const tags = await queryInterface.select(null, "Tags", {});
+		const labels = await queryInterface.select(null, "Labels", {});
 		const projects = await queryInterface.select(null, "Projects", {});
 		const tasks = [];
 		const variations = 50;
 		const priorities = ["low", "medium", "high"];
-		const statuses = ["todo", "in-progress", "done"];
+		const statuses = ["backlog", "todo", "in progress", "done", "cancelled"];
 		for (let i = 0; i < variations; i++) {
 			tasks.push({
 				squadCode: firstSquadCode,
@@ -34,14 +34,14 @@ module.exports = {
 				status: statuses[Math.floor(Math.random() * statuses.length)],
 				creator: users[Math.floor(Math.random() * users.length)].id,
 				GCalendarEventId: faker.string.alphanumeric(64),
-				tags: JSON.stringify(
-					tags
-						.map((tag) => {
+				labels: JSON.stringify(
+					labels
+						.map((label) => {
 							if (Math.random() >= 0.5) {
-								return tag.id;
+								return label.id;
 							}
 						})
-						.filter((tag) => tag !== undefined)
+						.filter((label) => label !== undefined)
 				),
 				createdAt: new Date(),
 				updatedAt: new Date(),

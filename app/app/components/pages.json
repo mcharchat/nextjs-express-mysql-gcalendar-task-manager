@@ -10,5 +10,5 @@
 		"href": "/app/projects",
 		"icon": "lucide:book-open-check"
 	},
-	{ "name": "Tags", "href": "/app/tags", "icon": "lucide:tags" }
+	{ "name": "Labels", "href": "/app/labels", "icon": "lucide:labels" }
 ]

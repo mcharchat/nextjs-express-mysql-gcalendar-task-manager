@@ -27,10 +27,10 @@ module.exports = (sequelize, DataTypes) => {
 				as: "tasks",
 			});
 
-			this.hasMany(models.Tag, {
+			this.hasMany(models.Label, {
 				foreignKey: "squadCode",
 				sourceKey: "code",
-				as: "tags",
+				as: "labels",
 			});
 		}
 	}

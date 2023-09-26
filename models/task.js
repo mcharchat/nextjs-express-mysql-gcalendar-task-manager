@@ -30,10 +30,16 @@ module.exports = (sequelize, DataTypes) => {
 			startDate: DataTypes.DATE,
 			dueDate: DataTypes.DATE,
 			priority: DataTypes.ENUM("low", "medium", "high"),
-			status: DataTypes.ENUM("todo", "in-progress", "done"),
+			status: DataTypes.ENUM(
+				"backlog",
+				"todo",
+				"in progress",
+				"done",
+				"cancelled"
+			),
 			creator: DataTypes.INTEGER,
 			GCalendarEventId: DataTypes.STRING,
-			tags: DataTypes.JSON,
+			labels: DataTypes.JSON,
 		},
 		{
 			sequelize,
