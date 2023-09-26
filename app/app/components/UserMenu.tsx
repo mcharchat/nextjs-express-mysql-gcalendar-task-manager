@@ -15,7 +15,7 @@ import {
 	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, SunMoon } from "lucide-react";
+import { LogOut, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
@@ -38,7 +38,7 @@ function UserMenu() {
 	}, [session]);
 
 	React.useEffect(() => {
-		if (status === "unauthenticated") {			
+		if (status === "unauthenticated") {
 			toast({
 				title: "Logged out!",
 				description: "Wait for a moment while we send you to the login page",
@@ -57,19 +57,31 @@ function UserMenu() {
 			<DropdownMenuContent className='w-56'>
 				<DropdownMenuGroup>
 					<DropdownMenuSub>
-						<DropdownMenuSubTrigger side="left">
-							<SunMoon className='mr-2 h-4 w-4' />
+						<DropdownMenuSubTrigger side='left'>
+							<span className='relative'>
+								<Sun className='mr-2 h-4 w-4 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0' />
+								<Moon className='absolute top-0 mr-2 h-4 w-4 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100' />
+							</span>
 							<span>Theme</span>
 						</DropdownMenuSubTrigger>
 						<DropdownMenuPortal>
 							<DropdownMenuSubContent>
-								<DropdownMenuItem onClick={() => setTheme("light")} className='cursor-pointer'>
+								<DropdownMenuItem
+									onClick={() => setTheme("light")}
+									className='cursor-pointer'
+								>
 									<span>Light</span>
 								</DropdownMenuItem>
-								<DropdownMenuItem onClick={() => setTheme("dark")} className='cursor-pointer'>
+								<DropdownMenuItem
+									onClick={() => setTheme("dark")}
+									className='cursor-pointer'
+								>
 									<span>Dark</span>
 								</DropdownMenuItem>
-								<DropdownMenuItem onClick={() => setTheme("system")} className='cursor-pointer'>
+								<DropdownMenuItem
+									onClick={() => setTheme("system")}
+									className='cursor-pointer'
+								>
 									<span>System</span>
 								</DropdownMenuItem>
 							</DropdownMenuSubContent>
