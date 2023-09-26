@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
 			picture: DataTypes.STRING,
 			squadCode: DataTypes.UUID,
 			accessToken: DataTypes.STRING,
+			refreshToken: DataTypes.STRING,
 			exp: DataTypes.INTEGER,
 			calendarId: DataTypes.STRING,
 		},

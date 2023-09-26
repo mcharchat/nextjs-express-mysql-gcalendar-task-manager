@@ -1,6 +1,5 @@
 "use strict";
 const { faker } = require("@faker-js/faker");
-const { v4 } = require("uuid");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -34,7 +33,7 @@ module.exports = {
 				priority: priorities[Math.floor(Math.random() * priorities.length)],
 				status: statuses[Math.floor(Math.random() * statuses.length)],
 				creator: users[Math.floor(Math.random() * users.length)].id,
-				GCalendarEventId: v4(),
+				GCalendarEventId: faker.string.alphanumeric(64),
 				tags: JSON.stringify(
 					tags
 						.map((tag) => {

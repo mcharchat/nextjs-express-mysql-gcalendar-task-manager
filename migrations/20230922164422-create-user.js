@@ -54,6 +54,10 @@ module.exports = {
 				type: Sequelize.STRING,
 				allowNull: true,
 			},
+			refreshToken: {
+				type: Sequelize.STRING,
+				allowNull: true,
+			},
 			exp: {
 				type: Sequelize.INTEGER,
 				allowNull: true,
