@@ -18,6 +18,7 @@ import {
 import { LogOut, SunMoon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/ui/use-toast";
 
 function UserMenu() {
 	const { data: session, status } = useSession();
@@ -27,6 +28,7 @@ function UserMenu() {
 	const [alt, setAlt] = React.useState<string | undefined | null>("alt");
 	const { setTheme } = useTheme();
 	const { push } = useRouter();
+	const { toast } = useToast();
 
 	React.useEffect(() => {
 		if (session?.user?.picture) {
@@ -36,7 +38,11 @@ function UserMenu() {
 	}, [session]);
 
 	React.useEffect(() => {
-		if (status === "unauthenticated") {
+		if (status === "unauthenticated") {			
+			toast({
+				title: "Logged out!",
+				description: "Wait for a moment while we send you to the login page",
+			});
 			push("/auth/signin");
 		}
 	}, [status]);
