@@ -3,7 +3,6 @@ import React from "react";
 import {
 	Sheet,
 	SheetContent,
-	SheetDescription,
 	SheetHeader,
 	SheetTitle,
 	SheetTrigger,
@@ -45,7 +44,7 @@ function MenuSidebar() {
 						</Link>
 					</SheetTitle>
 					<Separator className='my-4' />
-					<SheetDescription className='p-4'>
+					<div className='text-sm text-muted-foreground p-4'>
 						<ScrollArea>
 							<div className='flex flex-col items-start space-y-6 text-sm font-medium'>
 								{pages.map((page, key) => (
@@ -66,7 +65,7 @@ function MenuSidebar() {
 								))}
 							</div>
 						</ScrollArea>
-					</SheetDescription>
+					</div>
 				</SheetHeader>
 			</SheetContent>
 		</Sheet>
