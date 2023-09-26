@@ -106,19 +106,6 @@ module.exports = {
 					key: "id",
 				},
 			},
-			assignee: {
-				type: Sequelize.INTEGER,
-				allowNull: true,
-				index: true,
-				reference: {
-					model: User,
-					key: "id",
-				},
-			},
-			attendees: {
-				type: Sequelize.JSON,
-				allowNull: true,
-			},
 			GCalendarEventId: {
 				type: Sequelize.STRING,
 				allowNull: false,

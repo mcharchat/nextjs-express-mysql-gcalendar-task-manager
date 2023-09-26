@@ -16,11 +16,6 @@ module.exports = (sequelize, DataTypes) => {
 			});
 
 			this.belongsTo(models.User, {
-				foreignKey: "assignee",
-				targetKey: "id",
-			});
-
-			this.belongsTo(models.User, {
 				foreignKey: "creator",
 				targetKey: "id",
 			});
@@ -37,8 +32,6 @@ module.exports = (sequelize, DataTypes) => {
 			priority: DataTypes.ENUM("low", "medium", "high"),
 			status: DataTypes.ENUM("todo", "in-progress", "done"),
 			creator: DataTypes.INTEGER,
-			assignee: DataTypes.INTEGER,
-			attendees: DataTypes.JSON,
 			GCalendarEventId: DataTypes.STRING,
 			tags: DataTypes.JSON,
 		},

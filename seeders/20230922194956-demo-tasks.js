@@ -34,16 +34,6 @@ module.exports = {
 				priority: priorities[Math.floor(Math.random() * priorities.length)],
 				status: statuses[Math.floor(Math.random() * statuses.length)],
 				creator: users[Math.floor(Math.random() * users.length)].id,
-				assignee: users[Math.floor(Math.random() * users.length)].id,
-				attendees: JSON.stringify(
-					users
-						.map((user) => {
-							if (Math.random() >= 0.5) {
-								return user.id;
-							}
-						})
-						.filter((user) => user !== undefined)
-				),
 				GCalendarEventId: v4(),
 				tags: JSON.stringify(
 					tags
