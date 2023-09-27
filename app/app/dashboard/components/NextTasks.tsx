@@ -18,43 +18,19 @@ import {
 } from "@radix-ui/react-icons";
 import React from "react";
 
-const statuses = [
-	{
-		value: "backlog",
-		icon: <QuestionMarkCircledIcon className='h-4 w-4' />,
-	},
-	{
-		value: "todo",
-		icon: <CircleIcon className='h-4 w-4' />,
-	},
-	{
-		value: "in progress",
-		icon: <StopwatchIcon className='h-4 w-4' />,
-	},
-	{
-		value: "done",
-		icon: <CheckCircledIcon className='h-4 w-4' />,
-	},
-	{
-		value: "canceled",
-		icon: <CrossCircledIcon className='h-4 w-4' />,
-	},
-];
+const priorityIcons = {
+	low: <ArrowDownIcon className='h-4 w-4' />,
+	medium: <ArrowRightIcon className='h-4 w-4' />,
+	high: <ArrowUpIcon className='h-4 w-4' />,
+};
 
-const priorities = [
-	{
-		value: "low",
-		icon: <ArrowDownIcon className='h-4 w-4' />,
-	},
-	{
-		value: "medium",
-		icon: <ArrowRightIcon className='h-4 w-4' />,
-	},
-	{
-		value: "high",
-		icon: <ArrowUpIcon className='h-4 w-4' />,
-	},
-];
+const statusesIcons = {
+	backlog: <QuestionMarkCircledIcon className='h-4 w-4' />,
+	todo: <CircleIcon className='h-4 w-4' />,
+	"in progress": <StopwatchIcon className='h-4 w-4' />,
+	done: <CheckCircledIcon className='h-4 w-4' />,
+	canceled: <CrossCircledIcon className='h-4 w-4' />,
+};
 
 export function NextTasks({ nextTasksData }: { nextTasksData: any }) {
 	const [sort, setSort] = React.useState({
@@ -63,28 +39,22 @@ export function NextTasks({ nextTasksData }: { nextTasksData: any }) {
 	});
 
 	const sortBy = (key: string) => {
-		if (sort.key === key) {
-			setSort((prev) => ({
-				...prev,
-				order: prev.order === "asc" ? "desc" : "asc",
-			}));
-		} else {
-			setSort({
-				key,
-				order: "asc",
-			});
-		}
+		setSort((prev) => ({
+			key,
+			order: prev.key === key ? (prev.order === "asc" ? "desc" : "asc") : "asc",
+		}));
+	};
+
+	const sortNextTasksData = () => {
+		nextTasksData.sort((a: any, b: any) => {
+			const sortOrder = sort.order === "asc" ? 1 : -1;
+			return sortOrder * (a[sort.key] > b[sort.key] ? 1 : -1);
+		});
 	};
 
 	React.useEffect(() => {
-		nextTasksData.sort((a: any, b: any) => {
-			if (sort.order === "asc") {
-				return a[sort.key] > b[sort.key] ? 1 : -1;
-			} else {
-				return a[sort.key] < b[sort.key] ? 1 : -1;
-			}
-		});
-	}, [sort]);
+		sortNextTasksData();
+	}, [sort.key, sort.order]);
 
 	return (
 		<Table>
@@ -151,13 +121,20 @@ export function NextTasks({ nextTasksData }: { nextTasksData: any }) {
 			</TableHeader>
 			<TableBody>
 				{nextTasksData.map((task: any) => (
-					<TableRow key={task.GCalendarEventId}>
+					<TableRow key={task.id}>
 						<TableCell className='font-medium'>{task.title}</TableCell>
 						<TableCell>
 							<div className='flex space-x-2 items-center'>
-								{statuses
-									.filter((status) => status.value === task.status)
-									.map((status) => status.icon)}
+								{
+									statusesIcons[
+										task.status as
+											| "backlog"
+											| "todo"
+											| "in progress"
+											| "done"
+											| "canceled"
+									]
+								}
 								<div>
 									{task.status.charAt(0).toUpperCase() + task.status.slice(1)}
 								</div>
@@ -166,9 +143,7 @@ export function NextTasks({ nextTasksData }: { nextTasksData: any }) {
 						<TableCell>{new Date(task.dueDate).toLocaleDateString()}</TableCell>
 						<TableCell>
 							<div className='flex space-x-2 items-center'>
-								{priorities
-									.filter((priority) => priority.value === task.priority)
-									.map((priority) => priority.icon)}
+								{priorityIcons[task.priority as "low" | "medium" | "high"]}
 								<div>
 									{task.priority.charAt(0).toUpperCase() +
 										task.priority.slice(1)}
