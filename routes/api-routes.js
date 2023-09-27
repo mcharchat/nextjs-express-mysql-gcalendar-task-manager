@@ -1,5 +1,6 @@
 var express = require("express");
 const { getUsersMe, putUsersMe } = require("../controllers/user-controller");
+const { getDashboard } = require("../controllers/dashboard-controller");
 var router = express.Router();
 
 // middleware that is specific to this router
@@ -13,6 +14,9 @@ router.get("/", function (req, res) {
 // route for users/me
 router.get("/users/me", getUsersMe);
 router.put("/users/me", putUsersMe);
+
+// route for dashboard data
+router.get("/dashboard", getDashboard);
 
 // define the route for 404 errors
 router.get("*", function (req, res) {
