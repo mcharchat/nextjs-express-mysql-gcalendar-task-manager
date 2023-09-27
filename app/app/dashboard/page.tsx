@@ -10,11 +10,13 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import BigNumbersCard from "./components/BigNumbersCard";
 import { Overview } from "./components/Overview";
-import React from "react";
+import React, { useRef } from "react";
+import html2canvas from "html2canvas";
 import axios from "axios";
 import { TooltipWithChildren } from "@/app/components/tooltip";
 import { useToast } from "@/components/ui/use-toast";
 import { NextTasks } from "./components/NextTasks";
+import { ArrowDownToLine } from "lucide-react";
 
 export default function DashboardPage() {
 	const { toast } = useToast();
@@ -54,6 +56,7 @@ export default function DashboardPage() {
 		allData: { name: string; type: string; value: number; group: string }[];
 	} | null>(null);
 	const [nextTasksData, setNextTasksData] = React.useState(null);
+	const dashRef = useRef(null);
 
 	// get data from /api/dashboard using axios
 	React.useEffect(() => {
@@ -64,9 +67,10 @@ export default function DashboardPage() {
 				return prev.map((item) => {
 					return {
 						...item,
-						value: res.data.bigNumbersData.filter(
-							(i: { type: string; value: number }) => i.type === item.type
-						)[0]?.value || 0,
+						value:
+							res.data.bigNumbersData.filter(
+								(i: { type: string; value: number }) => i.type === item.type
+							)[0]?.value || 0,
 					};
 				});
 			});
@@ -80,9 +84,20 @@ export default function DashboardPage() {
 		toast({ title: "Squad code copied to clipboard" });
 	};
 
+	const captureImage = () => {
+		html2canvas(dashRef.current as unknown as HTMLElement).then((canvas) => {
+			const imgData = canvas.toDataURL("image/png");
+			const a = document.createElement("a");
+			a.href = imgData;
+			a.download = "GTaskPro - Dashboard.png";
+			a.click();
+			a.remove();
+		});
+	};
+
 	return (
 		<>
-			<div className='flex-col flex'>
+			<div className='flex-col flex' ref={dashRef}>
 				<div className='flex-1 space-y-4 p-8 pt-6'>
 					<div className='flex items-center justify-between space-y-2'>
 						<div className='flex flex-col'>
@@ -109,6 +124,15 @@ export default function DashboardPage() {
 								)}
 							</div>
 						</div>
+						<TooltipWithChildren
+							tooltipContent={
+								<div className='font-bold'>Download the dashboard</div>
+							}
+						>
+							<Button variant='ghost' onClick={captureImage}>
+								<ArrowDownToLine className='h-4 w-4' />
+							</Button>
+						</TooltipWithChildren>
 					</div>
 					<div className='mt-2 ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 space-y-4'>
 						<div className='grid gap-4 md:grid-cols-2 lg:grid-cols-4'>
