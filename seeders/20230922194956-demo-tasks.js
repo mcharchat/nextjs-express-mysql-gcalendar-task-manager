@@ -21,7 +21,7 @@ module.exports = {
 		const tasks = [];
 		const variations = 50;
 		const priorities = ["low", "medium", "high"];
-		const statuses = ["backlog", "todo", "in progress", "done", "cancelled"];
+		const statuses = ["backlog", "todo", "in progress", "done", "canceled"];
 		for (let i = 0; i < variations; i++) {
 			tasks.push({
 				squadCode: firstSquadCode,
@@ -32,17 +32,9 @@ module.exports = {
 				dueDate: faker.date.future(),
 				priority: priorities[Math.floor(Math.random() * priorities.length)],
 				status: statuses[Math.floor(Math.random() * statuses.length)],
-				creator: users[Math.floor(Math.random() * users.length)].id,
+				creatorId: users[Math.floor(Math.random() * users.length)].id,
 				GCalendarEventId: faker.string.alphanumeric(64),
-				labels: JSON.stringify(
-					labels
-						.map((label) => {
-							if (Math.random() >= 0.5) {
-								return label.id;
-							}
-						})
-						.filter((label) => label !== undefined)
-				),
+				labelId: labels[Math.floor(Math.random() * labels.length)].id,
 				createdAt: new Date(),
 				updatedAt: new Date(),
 			});

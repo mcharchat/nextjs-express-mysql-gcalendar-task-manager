@@ -16,8 +16,21 @@ module.exports = (sequelize, DataTypes) => {
 			});
 
 			this.belongsTo(models.User, {
-				foreignKey: "creator",
+				foreignKey: "creatorId",
 				targetKey: "id",
+				as: "creator",
+			});
+
+			this.belongsTo(models.Project, {
+				foreignKey: "projectId",
+				targetKey: "id",
+				as: "project",
+			});
+
+			this.belongsTo(models.Label, {
+				foreignKey: "labelId",
+				targetKey: "id",
+				as: "label",
 			});
 		}
 	}
@@ -35,11 +48,11 @@ module.exports = (sequelize, DataTypes) => {
 				"todo",
 				"in progress",
 				"done",
-				"cancelled"
+				"canceled"
 			),
-			creator: DataTypes.INTEGER,
+			creatorId: DataTypes.INTEGER,
 			GCalendarEventId: DataTypes.STRING,
-			labels: DataTypes.JSON,
+			labelId: DataTypes.INTEGER,
 		},
 		{
 			sequelize,

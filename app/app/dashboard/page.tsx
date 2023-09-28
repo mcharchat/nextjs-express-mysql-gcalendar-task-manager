@@ -58,7 +58,6 @@ export default function DashboardPage() {
 	const [nextTasksData, setNextTasksData] = React.useState(null);
 	const dashRef = useRef(null);
 
-	// get data from /api/dashboard using axios
 	React.useEffect(() => {
 		axios.get("/api/dashboard").then((res) => {
 			setLoading(false);

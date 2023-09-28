@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
 			});
 
 			this.hasMany(models.Task, {
-				foreignKey: "creator",
+				foreignKey: "creatorId",
 				sourceKey: "id",
 				as: "createdTasks",
 			});

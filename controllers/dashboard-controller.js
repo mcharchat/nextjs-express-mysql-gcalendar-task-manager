@@ -33,7 +33,7 @@ const dashboardController = {
 			return acc;
 		}, {});
 
-		const myTasks = allTasks.filter((task) => task.creator === user.id);
+		const myTasks = allTasks.filter((task) => task.creatorId === user.id);
 
 		const myTasksStatusCounts = myTasks.reduce((acc, task) => {
 			if (acc[task.status]) {

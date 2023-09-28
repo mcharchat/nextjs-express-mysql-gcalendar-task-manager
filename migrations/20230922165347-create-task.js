@@ -1,6 +1,6 @@
 "use strict";
 
-const { Squad, User, Project } = require("../models");
+const { Squad, User, Project, Label } = require("../models");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -94,16 +94,16 @@ module.exports = {
 					"todo",
 					"in progress",
 					"done",
-					"cancelled"
+					"canceled"
 				),
 				allowNull: false,
 				defaultValue: "todo",
 				validator: {
 					isNull: false,
-					isIn: [["backlog", "todo", "in progress", "done", "cancelled"]],
+					isIn: [["backlog", "todo", "in progress", "done", "canceled"]],
 				},
 			},
-			creator: {
+			creatorId: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
 				index: true,
@@ -119,9 +119,14 @@ module.exports = {
 					isNull: false,
 				},
 			},
-			labels: {
-				type: Sequelize.JSON,
+			labelId: {
+				type: Sequelize.INTEGER,
 				allowNull: true,
+				index: true,
+				reference: {
+					model: Label,
+					key: "id",
+				},
 			},
 		});
 	},

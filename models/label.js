@@ -14,6 +14,12 @@ module.exports = (sequelize, DataTypes) => {
 				targetKey: "code",
 				as: "squad",
 			});
+
+			this.hasMany(models.Task, {
+				foreignKey: "labelId",
+				sourceKey: "id",
+				as: "tasks",
+			});
 		}
 	}
 	Label.init(
