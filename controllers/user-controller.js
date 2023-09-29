@@ -7,6 +7,10 @@ const userController = {
 	getUsersMe: async (req, res) => {
 		//const secret = process.env.NEXTAUTH_SECRET;
 		const token = await getToken({ req });
+		if (!token) {
+			res.status(200).json({ message: "Unauthorized" });
+			return;
+		}
 		const { accessToken, exp } = token;
 		// try to find the user in the database
 		const user = await User.findOne({
