@@ -1,6 +1,6 @@
 # GTaskPro - Task Management Application
 
-Welcome to GTaskPro, a full-stack task management application built using Node.js, Express, MySQL, and Next.js/Handlebars. This project was developed as a response to the Akm Performma Full Stack Developer Challenge, which aimed to assess skills in web development, external API integration, user authentication, and documentation.
+Welcome to GTaskPro, a full-stack task management application built using Node.js, Express, MySQL, and Next.js. This project was developed as a response to the Akm Performma Full Stack Developer Challenge, which aimed to assess skills in web development, external API integration, user authentication, and documentation.
 
 ## Challenge Overview
 
