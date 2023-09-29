@@ -68,12 +68,28 @@ export function PlusTaskDialog({
 		}
 	});
 
+	const validateDates = new Promise((resolve, reject) => {
+		if (!thisTask?.startDate || !thisTask?.dueDate) {
+			reject("Start Date and Due Date are required");
+		} else if (thisTask?.startDate <= thisTask?.dueDate) {
+			resolve(true);
+		} else {
+			reject("Start Date cannot be greater than Due Date");
+		}
+	});
+
 	const createTask = async () => {
 		await validateFields.catch((error) => {
 			toast({
 				title: "Error",
 				description:
 					"Please fill all the following required fields: " + error.join(", "),
+			});
+		});
+		await validateDates.catch((error: string) => {
+			toast({
+				title: "Error",
+				description: error,
 			});
 		});
 		await axios
