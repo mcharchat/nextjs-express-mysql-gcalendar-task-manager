@@ -136,17 +136,18 @@ export function PlusTaskDialog({
 							<SelectContent>
 								<SelectGroup>
 									<SelectLabel>Projects</SelectLabel>
-									{projects.map((project: any, index: number) => (
-										<SelectItem value={project.id} key={index}>
-											<div className='flex gap-2 items-center'>
-												<Badge variant='outline'>
-													<span className='max-w-[400px] truncate font-medium'>
-														{project.name}
-													</span>
-												</Badge>
-											</div>
-										</SelectItem>
-									))}
+									{projects.length > 0 &&
+										projects.map((project: any, index: number) => (
+											<SelectItem value={project.id} key={index}>
+												<div className='flex gap-2 items-center'>
+													<Badge variant='outline'>
+														<span className='max-w-[400px] truncate font-medium'>
+															{project.name}
+														</span>
+													</Badge>
+												</div>
+											</SelectItem>
+										))}
 								</SelectGroup>
 							</SelectContent>
 						</Select>
@@ -255,20 +256,21 @@ export function PlusTaskDialog({
 							<SelectContent>
 								<SelectGroup>
 									<SelectLabel>Labels</SelectLabel>
-									{labels.map((label: any, index: number) => (
-										<SelectItem value={label.id} key={index}>
-											<div className='flex gap-2 items-center'>
-												<Badge
-													style={{
-														backgroundColor: label.bgColor,
-														color: label.textColor,
-													}}
-												>
-													{label.name}
-												</Badge>
-											</div>
-										</SelectItem>
-									))}
+									{labels.length > 0 &&
+										labels.map((label: any, index: number) => (
+											<SelectItem value={label.id} key={index}>
+												<div className='flex gap-2 items-center'>
+													<Badge
+														style={{
+															backgroundColor: label.bgColor,
+															color: label.textColor,
+														}}
+													>
+														{label.name}
+													</Badge>
+												</div>
+											</SelectItem>
+										))}
 								</SelectGroup>
 							</SelectContent>
 						</Select>
