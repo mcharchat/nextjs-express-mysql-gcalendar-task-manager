@@ -1,6 +1,8 @@
 const express = require("express");
 const next = require("next");
 const helmet = require("helmet");
+const cookieParser = require("cookie-parser");
+const bodyParser = require("body-parser");
 const apiRoutes = require("./routes/api-routes");
 
 const dev = process.env.NODE_ENV !== "production";
@@ -14,13 +16,16 @@ app
 	.then(() => {
 		const server = express();
 
-		server.use(helmet());
-
+		//server.use(helmet());
+		server.use(cookieParser());
+		
 		// when a request comes to /api/auth/*, redirect to next.js,
 		server.all("/api/auth/*", (req, res) => {
 			return handle(req, res);
 		});
-
+		
+		server.use(bodyParser.urlencoded({ extended: true }));
+		server.use(express.json());
 		//when a request comes to /api/*, redirect to api-routes on express
 		server.use("/api", apiRoutes);
 
