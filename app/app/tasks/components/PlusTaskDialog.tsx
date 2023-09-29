@@ -48,7 +48,34 @@ export function PlusTaskDialog({
 	const [thisTask, setThisTask] = React.useState<TaskSchema>(task);
 	const { toast } = useToast();
 
+	const validateFields = new Promise((resolve, reject) => {
+		if (
+			thisTask?.title &&
+			thisTask?.startDate &&
+			thisTask?.dueDate &&
+			thisTask?.priority &&
+			thisTask?.status
+		) {
+			resolve(true);
+		} else {
+			const emptyFields = [];
+			if (!thisTask?.title) emptyFields.push("Title");
+			if (!thisTask?.startDate) emptyFields.push("Start Date");
+			if (!thisTask?.dueDate) emptyFields.push("Due Date");
+			if (!thisTask?.priority) emptyFields.push("Priority");
+			if (!thisTask?.status) emptyFields.push("Status");
+			reject(emptyFields);
+		}
+	});
+
 	const createTask = async () => {
+		await validateFields.catch((error) => {
+			toast({
+				title: "Error",
+				description:
+					"Please fill all the following required fields: " + error.join(", "),
+			});
+		});
 		await axios
 			.post("/api/tasks", thisTask)
 			.then((response) => {
