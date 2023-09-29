@@ -10,6 +10,8 @@ import {
 	AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { TaskSchema } from "../data/schema";
+import axios from "axios";
+import { useToast } from "@/components/ui/use-toast";
 
 export function DeleteTaskDialog({
 	children,
@@ -18,6 +20,26 @@ export function DeleteTaskDialog({
 	children: React.ReactNode;
 	task: TaskSchema;
 }) {
+	const { toast } = useToast();
+	const deleteTask = async () => {
+		await axios
+			.delete(`/api/tasks/${task?.id}`)
+			.then((response) => {
+				toast({
+					title: "Task Deleted",
+					description: `Task "${task?.title}" has been deleted. Wait for the page to reload.`,
+				});
+				setTimeout(() => {
+					window.location.reload();
+				}, 3000);
+			})
+			.catch((error) => {
+				toast({
+					title: "Error",
+					description: `Task "${task?.title}" could not be deleted.`,
+				});
+			});
+	};
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger asChild>{children}</AlertDialogTrigger>
@@ -31,7 +53,7 @@ export function DeleteTaskDialog({
 				</AlertDialogHeader>
 				<AlertDialogFooter>
 					<AlertDialogCancel>Cancel</AlertDialogCancel>
-					<AlertDialogAction>Continue</AlertDialogAction>
+					<AlertDialogAction onClick={deleteTask}>Continue</AlertDialogAction>
 				</AlertDialogFooter>
 			</AlertDialogContent>
 		</AlertDialog>

@@ -26,6 +26,7 @@ import { statuses, priorities } from "../data/data";
 import { Badge } from "@/components/ui/badge";
 import { LabelSchema, ProjectSchema, TaskSchema } from "../data/schema";
 import axios from "axios";
+import { useToast } from "@/components/ui/use-toast";
 
 export function CopyEditTaskDialog({
 	children,
@@ -36,6 +37,7 @@ export function CopyEditTaskDialog({
 	task?: TaskSchema;
 	mode: "edit" | "copy";
 }) {
+	const { toast } = useToast();
 	const [thisTask, setThisTask] = React.useState<any>({
 		...task,
 		startDate: task?.startDate ? new Date(task?.startDate) : null,
@@ -48,13 +50,56 @@ export function CopyEditTaskDialog({
 		React.useState<boolean>(false);
 
 	React.useEffect(() => {
-		axios.get("/api/projects").then((response) => {
-			setProjects(response.data);
-		});
-		axios.get("/api/labels").then((response) => {
-			setLabels(response.data);
-		});
-	}, []);
+		if (openPlusTaskDialog) {
+			axios.get("/api/projects").then((response) => {
+				setProjects(response.data);
+			});
+			axios.get("/api/labels").then((response) => {
+				setLabels(response.data);
+			});
+		}
+	}, [openPlusTaskDialog]);
+
+	const copyEditTask = async () => {
+		if (mode === "copy") {
+			await axios
+				.post(`/api/tasks`, thisTask)
+				.then((response) => {
+					toast({
+						title: "Task Copied",
+						description: `Task "${thisTask?.title}" has been copied. Wait for the page to reload.`,
+					});
+					setTimeout(() => {
+						window.location.reload();
+					}, 3000);
+				})
+				.catch((error) => {
+					toast({
+						title: "Error",
+						description: `Task "${thisTask?.title}" has not been copied. Please try again.`,
+					});
+				});
+		} else if (mode === "edit") {
+			await axios
+				.put(`/api/tasks/${thisTask?.id}`, thisTask)
+				.then((response) => {
+					toast({
+						title: "Task Edited",
+						description: `Task "${thisTask?.title}" has been edited. Wait for the page to reload.`,
+					});
+					setTimeout(() => {
+						window.location.reload();
+					}, 3000);
+				})
+				.catch((error) => {
+					toast({
+						title: "Error",
+						description: `Task "${thisTask?.title}" has not been edited. Please try again.`,
+					});
+				});
+		}
+	};
+
 	return (
 		<Dialog open={openPlusTaskDialog} onOpenChange={setOpenPlusTaskDialog}>
 			<DialogTrigger asChild>{children}</DialogTrigger>
@@ -226,12 +271,7 @@ export function CopyEditTaskDialog({
 					</div>
 				</div>
 				<DialogFooter>
-					<Button
-						type='submit'
-						onClick={() => {
-							alert("oi");
-						}}
-					>
+					<Button type='submit' onClick={copyEditTask}>
 						{mode.charAt(0).toUpperCase() + mode.slice(1)} Task
 					</Button>
 				</DialogFooter>

@@ -25,6 +25,8 @@ import React from "react";
 import { statuses, priorities } from "../data/data";
 import { Badge } from "@/components/ui/badge";
 import { LabelSchema, ProjectSchema, TaskSchema } from "../data/schema";
+import axios from "axios";
+import { useToast } from "@/components/ui/use-toast";
 
 export function PlusTaskDialog({
 	children,
@@ -44,6 +46,27 @@ export function PlusTaskDialog({
 	mode: "add";
 }) {
 	const [thisTask, setThisTask] = React.useState<TaskSchema>(task);
+	const { toast } = useToast();
+
+	const createTask = async () => {
+		await axios
+			.post("/api/tasks", thisTask)
+			.then((response) => {
+				toast({
+					title: "Task Created",
+					description: "Task created successfully",
+				});
+				setTimeout(() => {
+					window.location.reload();
+				}, 3000);
+			})
+			.catch((error) => {
+				toast({
+					title: "Error",
+					description: "Error creating task",
+				});
+			});
+	};
 	return (
 		<Dialog open={openPlusTaskDialog} onOpenChange={setOpenPlusTaskDialog}>
 			<DialogTrigger asChild>{children}</DialogTrigger>
@@ -209,12 +232,7 @@ export function PlusTaskDialog({
 					</div>
 				</div>
 				<DialogFooter>
-					<Button
-						type='submit'
-						onClick={() => {
-							alert("oi");
-						}}
-					>
+					<Button type='submit' onClick={createTask}>
 						{mode.charAt(0).toUpperCase() + mode.slice(1)} Task
 					</Button>
 				</DialogFooter>
