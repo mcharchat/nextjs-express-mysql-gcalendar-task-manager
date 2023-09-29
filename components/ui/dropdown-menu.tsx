@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu"
-import { Check, ChevronRight, Circle } from "lucide-react"
+import { Check, ChevronRight, ChevronLeft, Circle } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -21,9 +21,10 @@ const DropdownMenuRadioGroup = DropdownMenuPrimitive.RadioGroup
 const DropdownMenuSubTrigger = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubTrigger>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubTrigger> & {
-    inset?: boolean
+    inset?: boolean,
+    side?: 'left' | 'right' | 'top' | 'bottom'
   }
->(({ className, inset, children, ...props }, ref) => (
+>(({ className, inset, children, side='right', ...props }, ref) => (
   <DropdownMenuPrimitive.SubTrigger
     ref={ref}
     className={cn(
@@ -33,8 +34,9 @@ const DropdownMenuSubTrigger = React.forwardRef<
     )}
     {...props}
   >
+    {side === 'left' && <ChevronLeft className="h-4 w-4" />}
     {children}
-    <ChevronRight className="ml-auto h-4 w-4" />
+    {side === 'right' && <ChevronRight className="ml-auto h-4 w-4" />}
   </DropdownMenuPrimitive.SubTrigger>
 ))
 DropdownMenuSubTrigger.displayName =

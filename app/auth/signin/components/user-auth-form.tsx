@@ -1,24 +1,23 @@
 "use client";
 
 import * as React from "react";
+import { useSession, signIn } from "next-auth/react";
 
 import { cn } from "@/lib/utils";
-//import { Icons } from "@/components/ui/icons";
+import { Icon } from "@iconify/react";
 import { Button } from "@/components/ui/button";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 	const [isLoading, setIsLoading] = React.useState<boolean>(false);
+	const { data: session } = useSession();
 
-	async function onSubmit(event: React.SyntheticEvent) {
-		event.preventDefault();
-		setIsLoading(true);
-
-		setTimeout(() => {
+	React.useEffect(() => {
+		if (session) {
 			setIsLoading(false);
-		}, 3000);
-	}
+		}
+	}, [session]);
 
 	return (
 		<div className={cn("grid gap-6", className)} {...props}>
@@ -27,14 +26,20 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 				type='button'
 				disabled={isLoading}
 				onClick={() => {
+					signIn('google');
 					setIsLoading(true);
-					console.log("clicked");
 				}}
 			>
-				{isLoading
-					? "loading" //<Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
-					: "not loading" //<Icons.google className='mr-2 h-4 w-4' />
-				}{" "}
+				{isLoading ? (
+					<Icon
+						icon='prime:spinner'
+						width='48'
+						height='48'
+						className='mr-2 h-4 w-4 animate-spin'
+					/>
+				) : (
+					<Icon icon='flat-color-icons:google' className='mr-2 h-4 w-4' />
+				)}{" "}
 				Google
 			</Button>
 		</div>

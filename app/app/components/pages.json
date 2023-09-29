@@ -1,0 +1,14 @@
+[
+	{
+		"name": "Dashboard",
+		"href": "/app/dashboard",
+		"icon": "lucide:layout-dashboard"
+	},
+	{ "name": "Tasks", "href": "/app/tasks", "icon": "lucide:clipboard-check" },
+	{
+		"name": "Projects",
+		"href": "/app/projects",
+		"icon": "lucide:book-open-check"
+	},
+	{ "name": "Labels", "href": "/app/labels", "icon": "lucide:tags" }
+]
