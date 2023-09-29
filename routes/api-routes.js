@@ -3,7 +3,7 @@ const { getUsersMe, putUsersMe } = require("../controllers/user-controller");
 const { getDashboard } = require("../controllers/dashboard-controller");
 const { getTasks, createTask, updateTask, deleteTask } = require("../controllers/task-controller");
 const { getProjects, createProject, updateProject, deleteProject } = require("../controllers/project-controller");
-const { getLabels } = require("../controllers/label-controller");
+const { getLabels, createLabel, updateLabel, deleteLabel } = require("../controllers/label-controller");
 var router = express.Router();
 
 // middleware that is specific to this router
@@ -35,6 +35,9 @@ router.delete("/projects/:id", deleteProject);
 
 // route for labels
 router.get("/labels", getLabels);
+router.post("/labels", createLabel);
+router.put("/labels/:id", updateLabel);
+router.delete("/labels/:id", deleteLabel);
 
 // define the route for 404 errors
 router.get("*", function (req, res) {
