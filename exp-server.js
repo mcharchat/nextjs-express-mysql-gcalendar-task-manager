@@ -16,7 +16,15 @@ app
 	.then(() => {
 		const server = express();
 
-		//server.use(helmet());
+		server.use(
+			helmet.contentSecurityPolicy({
+				directives: {
+					defaultSrc: ["'self'"],
+					scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'"],
+					imgSrc: ["'self'", "data:", "*"],
+				},
+			})
+		);
 		server.use(cookieParser());
 		
 		// when a request comes to /api/auth/*, redirect to next.js,
