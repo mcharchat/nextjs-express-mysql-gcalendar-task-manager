@@ -2,7 +2,7 @@ var express = require("express");
 const { getUsersMe, putUsersMe } = require("../controllers/user-controller");
 const { getDashboard } = require("../controllers/dashboard-controller");
 const { getTasks, createTask, updateTask, deleteTask } = require("../controllers/task-controller");
-const { getProjects } = require("../controllers/project-controller");
+const { getProjects, createProject, updateProject, deleteProject } = require("../controllers/project-controller");
 const { getLabels } = require("../controllers/label-controller");
 var router = express.Router();
 
@@ -29,6 +29,9 @@ router.delete("/tasks/:id", deleteTask);
 
 // route for projects
 router.get("/projects", getProjects);
+router.post("/projects", createProject);
+router.put("/projects/:id", updateProject);
+router.delete("/projects/:id", deleteProject);
 
 // route for labels
 router.get("/labels", getLabels);
