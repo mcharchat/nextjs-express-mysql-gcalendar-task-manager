@@ -1,7 +1,7 @@
 var express = require("express");
 const { getUsersMe, putUsersMe } = require("../controllers/user-controller");
 const { getDashboard } = require("../controllers/dashboard-controller");
-const { getTasks } = require("../controllers/task-controller");
+const { getTasks, createTask, updateTask, deleteTask } = require("../controllers/task-controller");
 const { getProjects } = require("../controllers/project-controller");
 const { getLabels } = require("../controllers/label-controller");
 var router = express.Router();
@@ -23,6 +23,9 @@ router.get("/dashboard", getDashboard);
 
 // route for tasks
 router.get("/tasks", getTasks);
+router.post("/tasks", createTask);
+router.put("/tasks/:id", updateTask);
+router.delete("/tasks/:id", deleteTask);
 
 // route for projects
 router.get("/projects", getProjects);
