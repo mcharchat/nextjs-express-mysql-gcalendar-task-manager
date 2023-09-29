@@ -33,6 +33,24 @@ To ensure data integrity, validations were implemented for future completion dat
 - [x] Searching in most of them
 - [x] A wonderful UX :)
 
+## Project Screenshots
+![Add Label Screen](./images/screenshots/addLabelScreen.png)
+![Add Project Screen](./images/screenshots/addProjectScreen.png)
+![Add Task Screen](./images/screenshots/addTaskScreen.png)
+![Copy Task Screen](./images/screenshots/copyTaskScreen.png)
+![Dashboard Page](./images/screenshots/dashboardPage.png)
+![Delete Project Screen](./images/screenshots/deleteProjectScreen.png)
+![Delete Task Screen](./images/screenshots/deleteTaskScreen.png)
+![Edit Project Screen](./images/screenshots/editProjectScreen.png)
+![Join Squad Page](./images/screenshots/joinSquadPage.png)
+![Login Page](./images/screenshots/loginPage.png)
+![ProjectS Page With Filter](./images/screenshots/projectPageWithFilter.png)
+![Projects Page](./images/screenshots/projectsPage.png)
+![Task Page](./images/screenshots/taskPage.png)
+![Task Select Columns](./images/screenshots/taskSelectColumns.png)
+![Edit Task Screen](./images/screenshots/editTaskScreen.png)
+![Filter Task In Dark Mode](./images/screenshots/filterTaskInDarkMode.png)
+
 
 ## Instructions for setting up Google Console configurations
 

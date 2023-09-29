@@ -6,6 +6,10 @@ const taskController = {
 	// get tasks
 	getTasks: async (req, res) => {
 		const token = await getToken({ req });
+		if (!token) {
+			res.status(200).json({ message: "Unauthorized" });
+			return;
+		}
 		const user = await User.findOne({
 			where: {
 				email: token.email,
