@@ -17,6 +17,7 @@ import { LabelSchema, ProjectSchema, TaskSchema } from "./data/schema";
 import Toolbar from "./components/Toolbar";
 import Footer from "./components/Footer";
 import DataTable from "./components/DataTable";
+import { addDays } from "date-fns";
 
 export default function TasksPage() {
 	const [loading, setLoading] = React.useState(true);
@@ -54,6 +55,10 @@ export default function TasksPage() {
 	React.useEffect(() => {
 		axios.get("/api/tasks").then((response) => {
 			setTableData(response.data);
+			table.getColumn("dueDate")?.setFilterValue({
+				from: new Date(),
+				to: addDays(new Date(), 60),
+			});
 			setLoading(false);
 		});
 		axios.get("/api/projects").then((response) => {
