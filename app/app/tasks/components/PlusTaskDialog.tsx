@@ -48,67 +48,61 @@ export function PlusTaskDialog({
 	const [thisTask, setThisTask] = React.useState<TaskSchema>(task);
 	const { toast } = useToast();
 
-	const validateFields = new Promise((resolve, reject) => {
-		if (
-			thisTask?.title &&
-			thisTask?.startDate &&
-			thisTask?.dueDate &&
-			thisTask?.priority &&
-			thisTask?.status
-		) {
-			resolve(true);
-		} else {
-			const emptyFields = [];
-			if (!thisTask?.title) emptyFields.push("Title");
-			if (!thisTask?.startDate) emptyFields.push("Start Date");
-			if (!thisTask?.dueDate) emptyFields.push("Due Date");
-			if (!thisTask?.priority) emptyFields.push("Priority");
-			if (!thisTask?.status) emptyFields.push("Status");
-			reject(emptyFields);
-		}
-	});
+	const validateFields = () => {
+		return new Promise((resolve, reject) => {
+			if (
+				thisTask?.title &&
+				thisTask?.startDate &&
+				thisTask?.dueDate &&
+				thisTask?.priority &&
+				thisTask?.status
+			) {
+				resolve(true);
+			} else {
+				const emptyFields = [];
+				if (!thisTask?.title) emptyFields.push("Title");
+				if (!thisTask?.startDate) emptyFields.push("Start Date");
+				if (!thisTask?.dueDate) emptyFields.push("Due Date");
+				if (!thisTask?.priority) emptyFields.push("Priority");
+				if (!thisTask?.status) emptyFields.push("Status");
+				reject(emptyFields);
+			}
+		});
+	};
 
-	const validateDates = new Promise((resolve, reject) => {
-		if (!thisTask?.startDate || !thisTask?.dueDate) {
-			reject("Start Date and Due Date are required");
-		} else if (thisTask?.startDate <= thisTask?.dueDate) {
-			resolve(true);
-		} else {
-			reject("Start Date cannot be greater than Due Date");
-		}
-	});
-
+	const validateDates = () => {
+		return new Promise((resolve, reject) => {
+			if (!thisTask?.startDate || !thisTask?.dueDate) {
+				reject("Start Date and Due Date are required");
+			} else if (thisTask?.startDate <= thisTask?.dueDate) {
+				resolve(true);
+			} else {
+				reject("Start Date cannot be greater than Due Date");
+			}
+		});
+	};
 	const createTask = async () => {
-		await validateFields.catch((error) => {
+		try {
+			await validateFields();
+			await validateDates();
+
+			await axios.post("/api/tasks", thisTask);
+			toast({
+				title: "Task Created",
+				description: "Task created successfully",
+			});
+			setTimeout(() => {
+				window.location.reload();
+			}, 3000);
+		} catch (error) {
 			toast({
 				title: "Error",
-				description:
-					"Please fill all the following required fields: " + error.join(", "),
+				description: Array.isArray(error)
+					? (("Please fill all the following required fields: " +
+							error.join(", ")) as string)
+					: (error as string),
 			});
-		});
-		await validateDates.catch((error: string) => {
-			toast({
-				title: "Error",
-				description: error,
-			});
-		});
-		await axios
-			.post("/api/tasks", thisTask)
-			.then((response) => {
-				toast({
-					title: "Task Created",
-					description: "Task created successfully",
-				});
-				setTimeout(() => {
-					window.location.reload();
-				}, 3000);
-			})
-			.catch((error) => {
-				toast({
-					title: "Error",
-					description: "Error creating task",
-				});
-			});
+		}
 	};
 	return (
 		<Dialog open={openPlusTaskDialog} onOpenChange={setOpenPlusTaskDialog}>

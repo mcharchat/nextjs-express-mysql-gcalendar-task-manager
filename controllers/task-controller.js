@@ -200,8 +200,8 @@ const taskController = {
 			{
 				title,
 				description,
-				projectId: project,
-				labelId: label,
+				projectId: typeof project === "number" ? project : project.id,
+				labelId: typeof label === "number" ? label : label.id,
 				startDate,
 				dueDate,
 				priority,

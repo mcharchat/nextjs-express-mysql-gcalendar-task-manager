@@ -34,22 +34,38 @@ To ensure data integrity, validations were implemented for future completion dat
 - [x] A wonderful UX :)
 
 ## Project Screenshots
-![Add Label Screen](./images/screenshots/addLabelScreen.png)
-![Add Project Screen](./images/screenshots/addProjectScreen.png)
-![Add Task Screen](./images/screenshots/addTaskScreen.png)
-![Copy Task Screen](./images/screenshots/copyTaskScreen.png)
-![Dashboard Page](./images/screenshots/dashboardPage.png)
-![Delete Project Screen](./images/screenshots/deleteProjectScreen.png)
-![Delete Task Screen](./images/screenshots/deleteTaskScreen.png)
-![Edit Project Screen](./images/screenshots/editProjectScreen.png)
-![Join Squad Page](./images/screenshots/joinSquadPage.png)
 ![Login Page](./images/screenshots/loginPage.png)
-![ProjectS Page With Filter](./images/screenshots/projectPageWithFilter.png)
-![Projects Page](./images/screenshots/projectsPage.png)
+*Login Page*
+![Join Squad Page](./images/screenshots/joinSquadPage.png)
+*Join Squad Page*
+![Dashboard Page](./images/screenshots/dashboardPage.png)
+*Dashboard Page*
 ![Task Page](./images/screenshots/taskPage.png)
+*Task Page*
 ![Task Select Columns](./images/screenshots/taskSelectColumns.png)
+*Task Select Columns*
 ![Edit Task Screen](./images/screenshots/editTaskScreen.png)
+*Edit Task Screen*
 ![Filter Task In Dark Mode](./images/screenshots/filterTaskInDarkMode.png)
+*Filter Task In Dark Mode*
+![Add Task Screen](./images/screenshots/addTaskScreen.png)
+*Add Task Screen*
+![Copy Task Screen](./images/screenshots/copyTaskScreen.png)
+*Copy Task Screen*
+![Delete Task Screen](./images/screenshots/deleteTaskScreen.png)
+*Delete Task Screen*
+![Projects Page](./images/screenshots/projectsPage.png)
+*Projects Page*
+![ProjectS Page With Filter](./images/screenshots/projectPageWithFilter.png)
+*ProjectS Page With Filter*
+![Add Project Screen](./images/screenshots/addProjectScreen.png)
+*Add Project Screen*
+![Delete Project Screen](./images/screenshots/deleteProjectScreen.png)
+*Delete Project Screen*
+![Edit Project Screen](./images/screenshots/editProjectScreen.png)
+*Edit Project Screen*
+![Add Label Screen](./images/screenshots/addLabelScreen.png)
+*Add Label Screen*
 
 
 ## Instructions for setting up Google Console configurations

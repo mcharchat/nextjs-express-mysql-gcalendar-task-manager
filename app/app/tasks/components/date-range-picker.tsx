@@ -35,10 +35,8 @@ export function DatePickerWithRange<TData, TValue>({
 	return (
 		<Popover>
 			<PopoverTrigger asChild>
-				<div className="flex gap-2 items-center">
-					<Label className='text-right text-xs'>
-						Filter {title}:
-					</Label>
+				<div className='flex gap-2 items-center'>
+					<Label className='text-right text-xs'>Filter {title}:</Label>
 					<Button
 						id='date'
 						variant={"outline"}
@@ -71,8 +69,8 @@ export function DatePickerWithRange<TData, TValue>({
 					defaultMonth={date?.from}
 					selected={date}
 					onSelect={(e) => {
-						setDate(e?.from && e.to ? e : undefined);
-						column?.setFilterValue(e?.from && e.to ? e : undefined);
+						setDate(e);
+						column?.setFilterValue(e);
 					}}
 					numberOfMonths={2}
 				/>
